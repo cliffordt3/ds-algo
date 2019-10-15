@@ -1,9 +1,6 @@
 package riversizes
 
-import "fmt"
-
 func RiverSizes(matrix [][]int) []int {
-	fmt.Println("Inside RiverSizes")
 	sizes := []int{}
 	visited := make([][]bool, len(matrix))
 	for i := range visited {
@@ -14,7 +11,6 @@ func RiverSizes(matrix [][]int) []int {
 			if visited[i][j] {
 				continue
 			}
-			fmt.Println("Calling traverseNode")
 			sizes = traverseNode(i, j, matrix, visited, sizes)
 		}
 	}
@@ -22,11 +18,9 @@ func RiverSizes(matrix [][]int) []int {
 }
 
 func traverseNode(i, j int, matrix [][]int, visited [][]bool, sizes []int) []int {
-	fmt.Println("Inside traverseNode")
 	currentRiverSize := 0
 	nodesToExplore := [][]int{{i, j}}
 	for len(nodesToExplore) > 0 {
-		fmt.Println("Inside traverseNode node explore")
 		currentNode := nodesToExplore[0]
 		nodesToExplore := nodesToExplore[1:]
 		i, j := currentNode[0], currentNode[1]
@@ -37,8 +31,7 @@ func traverseNode(i, j int, matrix [][]int, visited [][]bool, sizes []int) []int
 		if matrix[i][j] == 0 {
 			continue
 		}
-		currentRiverSize += 1
-		fmt.Println("Getting unvisited nodes")
+		currentRiverSize++
 		unvisitedNodes := getUnvisitedNodes(i, j, matrix, visited)
 		for _, neighbour := range unvisitedNodes {
 			nodesToExplore = append(nodesToExplore, neighbour)
@@ -53,7 +46,6 @@ func traverseNode(i, j int, matrix [][]int, visited [][]bool, sizes []int) []int
 }
 
 func getUnvisitedNodes(i, j int, matrix [][]int, visited [][]bool) [][]int {
-	fmt.Println("Inside unvisitedNodes")
 	unvisitedNodes := [][]int{}
 	if i > 0 && !visited[i-1][j] {
 		unvisitedNodes = append(unvisitedNodes, []int{i - 1, j})
@@ -67,6 +59,5 @@ func getUnvisitedNodes(i, j int, matrix [][]int, visited [][]bool) [][]int {
 	if j < (len(matrix[0])-1) && !visited[i][j+1] {
 		unvisitedNodes = append(unvisitedNodes, []int{i, j + 1})
 	}
-	fmt.Println("Leaving unvisitedNodes")
 	return unvisitedNodes
 }
